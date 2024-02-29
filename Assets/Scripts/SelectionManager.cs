@@ -26,6 +26,8 @@ public class SelectionManager : MonoBehaviour {
                 interaction_Info_UI.SetActive(false);
             }
 
+        } else {
+            interaction_Info_UI.SetActive(false);
         }
     }
 }
