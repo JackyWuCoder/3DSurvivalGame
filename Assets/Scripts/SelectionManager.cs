@@ -19,14 +19,14 @@ public class SelectionManager : MonoBehaviour {
         if (Physics.Raycast(ray, out hit)) {
             var selectionTransform = hit.transform;
 
-            if (selectionTransform.GetComponent<InteractableObject>()) {
+            if (selectionTransform.GetComponent<InteractableObject>() && selectionTransform.GetComponent<InteractableObject>().playerInRange) {
                 interaction_text.text = selectionTransform.GetComponent<InteractableObject>().GetItemName();
                 interaction_Info_UI.SetActive(true);
-            } else {
+            } else { // if there is a hit, but without an interactable Script.
                 interaction_Info_UI.SetActive(false);
             }
 
-        } else {
+        } else { // if there is no hit at all.
             interaction_Info_UI.SetActive(false);
         }
     }
