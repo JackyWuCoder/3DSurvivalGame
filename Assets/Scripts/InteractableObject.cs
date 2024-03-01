@@ -12,7 +12,7 @@ public class InteractableObject : MonoBehaviour {
     }
 
     private void Update() {
-        if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.F)) && playerInRange) {
+        if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.F)) && playerInRange && SelectionManager.Instance.onTarget) {
             Debug.Log("Item added to inventory");
             Destroy(gameObject);
         }

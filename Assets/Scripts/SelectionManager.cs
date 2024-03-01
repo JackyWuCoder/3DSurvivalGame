@@ -5,11 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SelectionManager : MonoBehaviour {
-
+    public static SelectionManager Instance { get; set; }
+    public bool onTarget;
     public GameObject interaction_Info_UI;
     Text interaction_text;
 
+    private void Awake() {
+        if ((Instance != null) && (Instance != this)) {
+            Destroy(gameObject);
+        } else {
+            Instance = this;
+        }
+    }
+
     private void Start() {
+        onTarget = false;
         interaction_text = interaction_Info_UI.GetComponent<Text>();
     }
 
@@ -18,11 +28,13 @@ public class SelectionManager : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
             var selectionTransform = hit.transform;
-
-            if (selectionTransform.GetComponent<InteractableObject>() && selectionTransform.GetComponent<InteractableObject>().playerInRange) {
-                interaction_text.text = selectionTransform.GetComponent<InteractableObject>().GetItemName();
+            InteractableObject interactable = selectionTransform.GetComponent<InteractableObject>();
+            if (interactable && interactable.playerInRange) {
+                onTarget = true;
+                interaction_text.text = interactable.GetItemName();
                 interaction_Info_UI.SetActive(true);
             } else { // if there is a hit, but without an interactable Script.
+                onTarget = false;
                 interaction_Info_UI.SetActive(false);
             }
 
